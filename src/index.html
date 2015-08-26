@@ -1,0 +1,252 @@
+<html>
+<head>
+    <title>Space Mining</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link type='type/css' rel="stylesheet" href="style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="libraries/jquery.cookie.js"></script>
+    <script src="code.js"></script>
+</head>
+
+<body>
+<div id="Background"></div>
+<div id="Holder">
+<div id="Game">
+    <div id="Spaceship">
+        <img src="images/Spaceship.png" height="200" width="500">
+    </div>
+    <div id="Asteroid"><img src="images/Asteroid.png" id="AsteroidImg"></div>
+    <button id="Collect-Materials" onclick="Collect()"><center id="Collect-Label">Mine Asteroid</center></button>
+    <button id="Recycle-Fuel" onclick="Recycle()"><center id="Recycle-Label">Recycle Fuel</center></button>
+    <div id="Resources">
+        <h1>Resources</h1>
+		<div>
+            <div id="Level">Level</div>
+            <div id="LevelBar"></div>
+        </div>
+        <p id="Cash"> Cash: 0 </p>
+        <p id="FuelCells"> Fuel Cell: 10 </p>
+        <table id="Materials">
+            <tr id="MatHeading">
+                <th colspan="2">Materials</th>
+                <th> Value</th>
+                <th> Sell</th>
+            </tr>
+            <tr>
+                <td width="135px">Carbonite:</td>
+                <td id="Carbonite" width="35px"> 0 </td>
+                <td align="center" width="150px"> $2 </td>
+                <td align="center" width="140px"><button onclick="Sell('Carbonite', 2, 1)">1</button><button onclick="Sell('Carbonite', 2, 10)">10</button><button onclick="Sell('Carbonite', 2, Resources.Carbonite)">All</button></td>
+            </tr>
+            <tr>
+                <td>Ironide:</td>
+                <td id="Ironide"> 0 </td>
+                <td align="center"> $5 </td>
+                <td align="center"> <button onclick="Sell('Ironide', 5, 1)">1</button><button onclick="Sell('Ironide', 5, 10)">10</button><button onclick="Sell('Ironide', 5, Resources.Ironide)">All</button></td>
+            </tr>
+			<tr>
+                <td>Alumanon:</td>
+                <td id="Alumanon" width="35px"> 0 </td>
+                <td align="center" width="150px"> $8 </td>
+                <td align="center" width="140px"><button onclick="Sell('Alumanon', 8, 1)">1</button><button onclick="Sell('Alumanon', 8, 10)">10</button><button onclick="Sell('Alumanon', 8, Resources.Alumanon)">All</button></td>
+            </tr>
+            <tr>
+                <td>Stearite:</td>
+                <td id="Stearite"> 0 </td>
+                <td align="center"> $15 </td>
+                <td align="center"><button onclick="Sell('Stearite', 15, 1)">1</button><button onclick="Sell('Stearite', 15, 10)">10</button><button onclick="Sell('Stearite', 15, Resources.Stearite)">All</button></td>
+            </tr>
+            <tr>
+                <td>Crysite:</td>
+                <td id="Crysite"> 0 </td>
+                <td align="center"> $30 </td>
+                <td align="center"><button onclick="Sell('Crysite', 30, 1)">1</button><button onclick="Sell('Crysite', 30, 10)">10</button><button onclick="Sell('Crysite', 30, Resources.Crysite)">All</button></td>
+            </tr>
+        </table>
+        <table id="Market">
+            <tr id="MarketHeader">
+                <th colspan="2">Market</th>
+                <th> Cost </th>
+                <th> Buy </th>
+            </tr>
+            <tr>
+                <td width="135px">Fuel Cells:</td>
+                <td id="FuelBuy" width="35px"> 0 </td>
+                <td align="center" width="150px"> $5 </td>
+                <td align="center" width="140px"> <button onclick="BuyFuel(1)">1</button><button onclick="BuyFuel(10)">10</button><button onclick="BuyFuel(100)">100</button></td>
+            </tr>
+            <tr>
+                <td>Cabins:</td>
+                <td id="Cabin"> 0 </td>
+                <td id="CabinPrice" align="center">$500</td>
+                <td align="center" class="Buy"> <button onclick="BuyMulti('Cabin', '500')"> Buy </button></td>
+            </tr>
+            <tr>
+                <td>Surface Sweeper:</td>
+                <td id="SurfaceSweeper"> 0 </td>
+                <td id="SurfaceSweeperPrice" align="center">$100</td>
+                <td align="center" class="Buy"> <button onclick="BuyMulti('SurfaceSweeper', '100')"> Buy </button></td>
+            </tr>
+            <tr>
+                <td>Drones:</td>
+                <td id="Drone"> 0 </td>
+                <td id="DronePrice" align="center">$250</td>
+                <td align="center" class="Buy"> <button onclick="BuyMulti('Drone', '250')"> Buy </button></td>
+            </tr>
+            <tr>
+                <td>Drillbot:</td>
+                <td id="Drillbot"> 0 </td>
+                <td id="DrillbotPrice" align="center">$500</td>
+                <td align="center" class="Buy"> <button onclick="BuyMulti('Drillbot', '600')"> Buy </button></td>
+            </tr>
+            <tr>
+                <td>Rock-Breaker:</td>
+                <td id="RockBreaker"> No </td>
+                <td align="center"> $750, 25 Ironide </td>
+                <td align="center" class="Buy"> <button onclick="BuyUpgrade('RockBreaker', '750', 'Ironide', '25')"> Buy </button></td>
+            </tr>
+            <tr>
+                <td>Filter:</td>
+                <td id="Filter"> No </td>
+                <td align="center">$1500, 250 Carbonite</td>
+                <td align="center" class="Buy"> <button onclick="BuyUpgrade('Filter', '1500', 'Carbonite', '250')"> Buy </button></td>
+            </tr>
+             <tr>
+                <td>Refinery:</td>
+                <td id="Refinery"> No </td>
+                <td align="center">$5000, 100 Alumanon</td>
+                <td align="center" class="Buy"> <button onclick="BuyUpgrade('Refinery', '5000', 'Alumanon', '50')"> Buy </button></td>
+            </tr>
+            <tr>
+                <td>Molten Laser:</td>
+                <td id="MoltenLaser"> No </td>
+                <td align="center">$8000, 500 Stearite</td>
+                <td align="center" class="Buy"> <button onclick="BuyUpgrade('MoltenLaser', '8000', 'Stearite', '500')"> Buy </button></td>
+            </tr>
+            <tr>
+                <td>Crystaliser:</td>
+                <td id="Crystaliser"> No </td>
+                <td align="center">$20000, 2000 Ironide</td>
+                <td align="center" class="Buy"> <button onclick="BuyUpgrade('Crystaliser', '20000', 'Ironide', '2000')"> Buy </button></td>
+            </tr>
+            <tr>
+                <td>Pre-Charger:</td>
+                <td id="PreCharger"> No </td>
+                <td align="center">$100000, 10000 Carbonite</td>
+                <td align="center" class="Buy"> <button onclick="BuyUpgrade('PreCharger', '100000', 'Carbonite', '10000')"> Buy </button></td>
+            </tr>
+        </table>
+    </div>
+    <div id="Deployment">
+    	<h1 id="DeployHeading">Deployment</h1>
+    	<table id="DeploymentTable">
+            <tr id="AutomationHeading">
+                <th colspan="2">Commodity</th>
+                <th> Production</th>
+                <th> Deploy/ Hire</th>
+            </tr>
+            <tr>
+                <td>Crew:</td>
+                <td id="ItemCrew"> 0/1 </td>
+                <td align="center"> Cash-3 </td>
+                <td align="center"><button onclick="Deploy('Crew', -10)">-10</button><button onclick="Deploy('Crew', -1)">-1</button>|<button onclick="Deploy('Crew', 1)">+1</button><button onclick="Deploy('Crew', 10)">+10</button></td>
+            </tr>
+            <tr>
+                <td width="150px">Surface Sweeper:</td>
+                <td id="ItemSurfaceSweeper" width="50px"> 0/1 </td>
+                <td align="center" width="180px" id="SurfaceWorth"> Carbonite+3, Fuel-1 </td>
+                <td align="center" width="140px"><button onclick="Deploy('SurfaceSweeper', -10)">-10</button><button onclick="Deploy('SurfaceSweeper', -1)">-1</button>|<button onclick="Deploy('SurfaceSweeper', 1)">+1</button><button onclick="Deploy('SurfaceSweeper', 10)">+10</button></td>
+            </tr>
+            <tr>
+                <td>Drones:</td>
+                <td id="ItemDrone"> 0/1 </td>
+                <td align="center" id="DroneWorth"> Ironide+3, Fuel-2 </td>
+                <td align="center"><button onclick="Deploy('Drone', -10)">-10</button><button onclick="Deploy('Drone', -1)">-1</button>|<button onclick="Deploy('Drone', 1)">+1</button><button onclick="Deploy('Drone', 10)">+10</button></td>
+            </tr>
+            <tr>
+                <td>Drillbot:</td>
+                <td id="ItemDrillbot"> 0/1 </td>
+                <td align="center" id="DrillbotWorth"> Alumanon+3, Fuel-3 </td>
+                <td align="center"><button onclick="Deploy('Drillbot', -10)">-10</button><button onclick="Deploy('Drillbot', -1)">-1</button>|<button onclick="Deploy('Drillbot', 1)">+1</button><button onclick="Deploy('Drillbot', 10)">+10</button></td>
+            </tr>
+
+        </table>
+        <table id="AssigningTable">
+            <tr id="AssigningHeading">
+                <th colspan="2">Job</th>
+                <th> Production</th>
+                <th> Assign</th>
+            </tr>
+            <tr>
+                <td width="135px">Fuel Recycler:</td>
+                <td id="JobFuelRecycler" width="50px"> 0 </td>
+                <td align="center" width="180px" class="JobWorth"> Fuel+1 </td>
+                <td align="center" width="140px">Default Job</td>
+            </tr>
+            <tr>
+                <td>Refiner:</td>
+                <td id="JobRefiner"> 0 </td>
+                <td align="center" class="JobWorth"> Stearite+1, Carbonite-3 Ironide-1 </td>
+                <td align="center"><button onclick="Assign('Refiner', -10)">-10</button><button onclick="Assign('Refiner', -1)">-1</button>|<button onclick="Assign('Refiner', 1)">+1</button><button onclick="Assign('Refiner', 10)">+10</button></td>
+            </tr>
+            <tr>
+                <td>Compressor:</td>
+                <td id="JobCompressor"> 0 </td>
+                <td align="center" class="JobWorth"> Crysite+1, Carbonite-10 </td>
+                <td align="center"><button onclick="Assign('Compressor', -10)">-10</button><button onclick="Assign('Compressor', -1)">-1</button>|<button onclick="Assign('Compressor', 1)">+1</button><button onclick="Assign('Compressor', 10)">+10</button></td>
+            </tr>
+        </table>
+    </div>
+    <div id="Upgrades">
+    	<h1>Upgrades</h1>
+    	<div id="ItemRockBreaker"> Rock Breaker</div>
+        <div id="ItemFilter"> Filter</div>
+        <div id="ItemMoltenLaser"> Molten Laser</div>
+        <div id="ItemRefinery"> Refinery</div>
+        <div id="ItemCrystaliser"> Crystaliser</div>
+        <div id="ItemPreCharger"> Pre-Charger</div>
+    </div>
+</div>
+</div>
+<div id="Sidebar">
+    <div class="SideHeader" onclick="Sidebar('Notifications')">
+    	<h1 align="right" style="border-top: 0px;">NOTIFICATIONS</h1>
+    </div>
+
+    <div id="Notifications">
+    </div>
+
+    <div class="SideHeader" onclick="Sidebar('Menu')">
+    	<h1 align="right">MENU</h1>
+    </div>
+
+    <div id="Menu">
+        <div id="Stats">
+        <H3>Stats</H3>
+        <p id="TimesMined"></p>
+        <P id="MaterialsSold"></P>
+        <p id="CashMade"></p>
+        <P id="FuelUsed"></P>
+        </div>
+        <button id = "reset" onclick="Reset()"> Reset </button>
+    </div>
+
+    <div class="SideHeader" onclick="Sidebar('Update')">
+        <h1 align="right">UPDATES</h1>
+    </div>
+
+    <div id="Update">
+	     <p class="version"> 0.3: Redesign</p>
+        <p class="list"> Released 09/12/13. Added a few new upgrades, such as the Molten Laser, the Pre-Charger, and a new job for the crew to perform, along with the new substance Stearite and some rebalancing of the game. A major change in the design and positioning, as you can now move around space, as well as a spaceship that has been added.</p>
+
+        <p class="version"> 0.2: New Stuff</p>
+        <p class="list"> Released 11/11/13. Rebuilt some of the design stuff, added an asteroid, some other technical stuff. Also got some new features like upgrades to the surface sweepers, drones that give you ironide, and a system of hiring crew to recycle fuel cells.</p>
+
+        <p class="version"> 0.1: Alpha</p>
+        <p class="list"> Released 4/11/13. First version, built just for fun. Features include Surface sweepers, Rock Breakers, and the basic mechanics, more to come soon!</p>
+    </div>
+</div>
+<div id="Ad"></div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+/*Font Setup*/
+	* {
+		font-family: sans-serif;
+		-webkit-touch-callout: none;
+	    -webkit-user-select: none;
+	    -khtml-user-select: none;
+	    -moz-user-select: moz-none;
+	    -ms-user-select: none;
+	    user-select: none;
+	}
+
+	td, th, h1, #Cash, #FuelCells, #ItemRockBreaker, #ItemFilter, #ItemMoltenLaser, #ItemRefinery, #ItemCrystaliser, #ItemPreCharger, #Level {
+		color: white;
+	}
+
+	h1 {
+		margin-top: 0px;
+	}
+
+	button {
+		font-size: 10px;
+	}
+
+/*Space*/
+	#Holder {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: -moz-calc(100% - 300px);
+		width: -webkit-calc(100% - 300px);
+		width: -o-calc(100% - 300px);
+		width: calc(100% - 300px);
+		overflow: auto;
+	}
+
+	#Game {
+		width: 2500px;
+		height: 2000px;
+	}
+
+	#Background {
+		position: absolute;
+		background-color: black;
+		top: 0;
+		left: 0;
+		background-image: url("images/Background-Star.jpg");
+		height: 100%;
+		width: 100%;
+	}
+
+/*Asteroid*/
+	#Asteroid {
+		position: absolute;
+		top: 800px;
+		left: 550px;
+		width: 250px;
+		height: 250px;
+		-ms-animation-name: spin 60s linear infinite;
+		-webkit-animation:spin 60s linear infinite;
+	    -moz-animation:spin 60s linear infinite;
+	    animation:spin 60s linear infinite;
+	}
+
+	@-ms-keyframes spin { 100% { -ms-transform: rotate(360deg);}}
+	@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg);}}
+	@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg);}}
+	@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg);}}
+
+	#AsteroidImg {
+		position: relative;
+		left: 25px;
+	}
+
+/*Buttons*/
+	#Collect-Materials, #Recycle-Fuel {
+		left: 25px;
+		position: absolute;
+		height: 50px;
+		width: 150px;
+		z-index: 2; 
+	}
+
+	#Level {
+		width: 200px;
+		height: 20px;
+	}
+
+	#Collect-Materials {
+		top: 900px;
+		left: 600px;
+	}
+
+	#Recycle-Fuel {
+		position: absolute;
+		left: 1100px;
+		top: 950px;
+	}
+	
+	#Collect-Label, #Recycle-Label {
+		position: absolute;
+		top: 12px;
+		font-weight: bold;
+		text-shadow: 1px 1px 0 #fff;
+		z-index: 0;
+	}
+
+/*Spaceship*/
+	#Spaceship {
+		position: absolute;
+		top: 850px;
+		left: 750px;
+		height: 200px;
+		width: 550px;
+	}
+
+	#Upgrades {
+		position: absolute;
+		left: 1325px;
+		width: 200px;
+		top: 850px;
+
+	}
+
+#Materials, #Market {
+	min-width: 500px;
+	position: relative;
+	z-index: 1;
+}
+
+#Resources {
+	position: absolute;
+	top: 1200px;
+	left: 550px;
+}
+
+#Deployment {
+	position: absolute;
+	top: 1000px;
+	left: 800px;
+}
+
+#Notifications, #Menu, #Update {
+	position: relative;
+	padding-right: 25px;
+	right: 0px; 
+	width: -moz-calc(100% - 25px);
+	width: -webkit-calc(100% - 25px);
+	width: -o-calc(100% - 25px);
+	width: calc(100% - 25px);
+	background-color: grey;
+	overflow: scroll;
+	z-index: 49;
+	height: -moz-calc(100% - 150px);
+	height: -webkit-calc(100% - 150px);
+	height: -o-calc(100% - 75px);
+	height: calc(100% - 75);
+}
+
+.SideHeader {
+	position: relative;
+	height: 50px;
+	vertical-align: text-top;
+	padding-right: 25px;
+	right: 0px; 
+	z-index: 50;
+}
+
+.SideHeader:hover {
+	background-color: lightgrey;
+}
+
+#Stats {
+	padding-left: 25px;
+}
+
+.list {
+	font-size: 12px;
+	text-align: right;
+}
+
+.version {
+	font-size: 18px;
+	text-align: right;
+}
+
+#Resources, #Deployment, #DeploymentTable {
+	width: 500px;
+}
+
+#Sidebar {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 300px;
+	height: -moz-calc(100% - 250px);
+	height: -webkit-calc(100% - 250px);
+	height: -o-calc(100% - 250px);
+	height: calc(100% - 250px);
+	background-color: grey;
+}
+
+#Ad {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	width: 300px;
+	height: 250px;
+	z-index: 60;
+	background-color: red;
+}
+
+#reset {
+	position: absolute;
+	background-color: white;
+	top: 20px;
+	left: 125px;
+	height: 20px;
+	width: 50px;
+}
+
+#reset:hover {
+	background-color: red;
+}
